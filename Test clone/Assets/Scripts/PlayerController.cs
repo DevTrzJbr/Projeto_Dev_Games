@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
-        if (Physics.Raycast(transform.position, transform.right, 0.5f))
+        if (Physics.Raycast(transform.position, transform.right, 1f))
         {
             rb.velocity = Vector3.zero;
         }
