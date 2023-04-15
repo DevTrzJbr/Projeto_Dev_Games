@@ -14,6 +14,18 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        TrapSpikes trapSpikes = FindObjectOfType<TrapSpikes>();
+        if (trapSpikes != null)
+        {
+            trapSpikes.OnPlayerEnterTrap += OnEnterTrap;
+        }
+    }
+
+    private void OnEnterTrap(PlayerController player)
+    {
+        Debug.Log("O jogador entrou na armadilha!");
+        // Faça algo quando o jogador entrar na armadilha
     }
 
     private void Update()
@@ -27,7 +39,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
-        if (Physics.Raycast(transform.position, transform.right, 0.5f))
+        if (Physics.Raycast(transform.position, transform.right, 1f))
         {
             rb.velocity = Vector3.zero;
         }
