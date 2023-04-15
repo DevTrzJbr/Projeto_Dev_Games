@@ -4,28 +4,51 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    private Coroutine currentCoroutine;
+    private bool isMoving = false;
+    private bool isUp = false;
+    private Vector3 startPosition;
+    private Vector3 targetPosition;
 
-    public void LiftUp()
+    private float upTime = 1f;
+    private float downTime = 1f;
+    private float waitTime = 2f;
+
+    private void Start()
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, 0.4f, transform.localPosition.z);
-        Debug.Log("Spike levantando");
-
-        // Se já existe uma corrotina em andamento, cancela
-        if (currentCoroutine != null)
-        {
-            StopCoroutine(currentCoroutine);
-        }
-
-        // Agenda a execução da função LowerDown depois de 2 segundos
-        currentCoroutine = StartCoroutine(LowerDownAfterDelay(2f));
+        upTime = Random.Range(0.1f, 0.25f);
+        startPosition = transform.localPosition;
+        targetPosition = new Vector3(startPosition.x, startPosition.y + 0.8f, startPosition.z);
+        StartCoroutine(MoveSpike());
     }
 
-    private IEnumerator LowerDownAfterDelay(float delay)
+    IEnumerator MoveSpike()
     {
-        yield return new WaitForSeconds(delay);
-        transform.localPosition = new Vector3(transform.localPosition.x, -0.4f, transform.localPosition.z);
-        Debug.Log("Spike abaixando");
-        currentCoroutine = null;
+        while (true)
+        {
+            isMoving = true;
+            yield return new WaitForSeconds(waitTime);
+
+            isUp = true;
+            float t = 0f;
+            while (t < upTime)
+            {
+                t += Time.deltaTime;
+                transform.localPosition = Vector3.Lerp(startPosition, targetPosition, t / upTime);
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(waitTime);
+
+            isUp = false;
+            t = 0f;
+            while (t < downTime)
+            {
+                t += Time.deltaTime;
+                transform.localPosition = Vector3.Lerp(targetPosition, startPosition, t / downTime);
+                yield return null;
+            }
+
+            isMoving = false;
+        }
     }
 }
