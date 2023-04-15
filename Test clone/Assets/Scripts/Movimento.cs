@@ -4,44 +4,47 @@ using UnityEngine;
 
 public class Movimento : MonoBehaviour
 {
-    private CharacterController character; // Referência ao componente CharacterController do personagem
-    private Animator animator; // Referência ao componente Animator do personagem
-    private Vector3 inputs; // Vetor que armazena as entradas de movimento do jogador
+    private CharacterController character;
+    private Animator animator;
+    private Vector3 inputs;
 
-    [SerializeField] private float velocidade = 2f; // Velocidade de movimento do personagem
-    [SerializeField] private float forcaDoPulo = 5f; // Força do pulo do personagem
+    [SerializeField] private float velocidade = 3f;
+    [SerializeField] private float forcaDoPulo = 2f;
 
     void Start()
     {
-        character = GetComponent<CharacterController>(); // Obtém a referência ao componente CharacterController do personagem
-        animator = GetComponent<Animator>(); // Obtém a referência ao componente Animator do personagem
+        character = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+
+        // Define a gravidade como duas vezes mais forte do que o padrão
+        Physics.gravity = new Vector3(0, -20f, 0);
     }
-    
+
     void Update()
     {
-        inputs.Set(Input.GetAxis("Horizontal"), 0, 0); // Obtém as entradas de movimento do jogador, definindo a componente y como zero
+        inputs.Set(Input.GetAxis("Horizontal"), 0, 0);
 
-        if (Input.GetKeyDown(KeyCode.W)) // Verifica se a tecla de W foi pressionada
+        if (Input.GetKeyDown(KeyCode.W))
         {
             animator.SetBool("jump", true);
-            character.Move(Vector3.up * forcaDoPulo); // Adiciona uma força vertical ao personagem para simular o pulo
+            character.Move(Vector3.up * forcaDoPulo);
         }
         else
         {
             animator.SetBool("jump", false);
         }
 
-        character.Move((transform.forward * inputs.magnitude * Time.deltaTime * velocidade)); // Move o personagem na direção do vetor de entrada
-        character.Move((Vector3.down * Time.deltaTime)); // Aplica a gravidade ao personagem
+        character.Move((transform.forward * inputs.magnitude * Time.deltaTime * velocidade));
+        character.Move((Vector3.down * Time.deltaTime));
 
-        if (inputs != Vector3.zero) // Verifica se o vetor de entrada é diferente de zero
+        if (inputs != Vector3.zero)
         {
-            animator.SetBool("andando", true); // Define a variável "andando" do Animator como verdadeira para ativar a animação de caminhada
-            transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 10); // Rotaciona o personagem na direção do vetor de entrada
+            animator.SetBool("andando", true);
+            transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 15);
         }
         else
         {
-            animator.SetBool("andando", false); // Define a variável "andando" do Animator como falsa para desativar a animação de caminhada
+            animator.SetBool("andando", false);
         }
     }
 }

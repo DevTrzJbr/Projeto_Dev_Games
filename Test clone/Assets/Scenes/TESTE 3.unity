@@ -1373,6 +1373,7 @@ GameObject:
   - component: {fileID: 678238366}
   - component: {fileID: 678238365}
   - component: {fileID: 678238364}
+  - component: {fileID: 678238367}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1445,6 +1446,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 6.2, y: 180.89, z: 0}
+--- !u!114 &678238367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678238363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72d9abe4f3aed643ab81809e6264c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 984755725}
+  smoothSpeed: 0.125
+  offset: {x: 0, y: 0, z: 0}
+  minHeight: 1
 --- !u!1 &709091919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,8 +2105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a0878cc4ca16846916e620e04217ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidade: 2
-  forcaDoPulo: 5
+  velocidade: 3
+  forcaDoPulo: 2
 --- !u!143 &984755723
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2108,6 +2125,11 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.57, z: 0}
+--- !u!4 &984755725 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a6e1b293f7ed5584fa548ddde966e03e, type: 3}
+  m_PrefabInstance: {fileID: 984755720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &984755726
 Rigidbody:
   m_ObjectHideFlags: 0
