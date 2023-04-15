@@ -14,6 +14,18 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        TrapSpikes trapSpikes = FindObjectOfType<TrapSpikes>();
+        if (trapSpikes != null)
+        {
+            trapSpikes.OnPlayerEnterTrap += OnEnterTrap;
+        }
+    }
+
+    private void OnEnterTrap(PlayerController player)
+    {
+        Debug.Log("O jogador entrou na armadilha!");
+        // Faça algo quando o jogador entrar na armadilha
     }
 
     private void Update()

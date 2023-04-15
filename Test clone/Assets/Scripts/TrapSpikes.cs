@@ -1,21 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TrapSpikes : MonoBehaviour
 {
+    public event Action<PlayerController> OnPlayerEnterTrap;
+    public event Action<PlayerController> OnPlayerExitTrap;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entrou no collider do pai!");
-            foreach (Transform child in transform)
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null)
             {
-                Spike spike = child.GetComponent<Spike>();
-                if (spike != null)
-                {
-                    spike.LiftUp();
-                }
+                Debug.Log("Player entrou na trap");
+                OnPlayerEnterTrap?.Invoke(player);
             }
         }
     }
@@ -24,14 +25,11 @@ public class TrapSpikes : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player saiu do collider do pai!");
-            foreach (Transform child in transform)
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null)
             {
-                Spike spike = child.GetComponent<Spike>();
-                if (spike != null)
-                {
-                    Debug.Log("Player saiu");
-                }
+                Debug.Log("Player saiu da trap");
+                OnPlayerExitTrap?.Invoke(player);
             }
         }
     }
