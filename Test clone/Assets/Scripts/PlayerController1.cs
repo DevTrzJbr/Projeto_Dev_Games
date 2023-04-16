@@ -10,9 +10,7 @@ public class PlayerController1 : MonoBehaviour
     public float wallJumpForce = 10f;
     private Rigidbody rb;
 
-    private CharacterController character; // Referência ao componente CharacterController do personagem
     private Animator animator; // Referência ao componente Animator do personagem
-    private Vector3 inputs; // Vetor que armazena as entradas de movimento do jogador
 
     GameObject groundObject;
 
@@ -72,19 +70,16 @@ public class PlayerController1 : MonoBehaviour
                 isGrounded = false;
                 animator.SetBool("jump", true);
             }
-            else if (Physics.Raycast(transform.position, transform.right, 1f)) // verifica se o jogador está colidindo com uma parede
+            else if (Physics.Raycast(transform.position + Vector3.up * 1f, transform.forward, out RaycastHit hit, 1f) && hit.collider.CompareTag("Wall")) // verifica se o jogador está colidindo com uma parede
             {
-                Vector3 jumpDirection = new Vector3(-transform.right.x, 1f, 0f).normalized; // calcula a direção do salto
+                Vector3 jumpDirection = new Vector3(-transform.forward.x, 1f, 0f).normalized; // calcula a direção do salto
                 rb.AddForce(jumpDirection * wallJumpForce, ForceMode.Impulse); // adiciona uma força para fazer o jogador saltar na parede
                 isGrounded = false;
                 animator.SetBool("jump", true);
             }
         }
 
-        if (Physics.Raycast(transform.position, transform.right, 1f))
-        {
-            rb.velocity = Vector3.zero;
-        }
+        Debug.DrawRay(transform.position + Vector3.up * 1f, transform.forward * 1f, Color.red); // desenha o raio do Raycast em vermelho
     }
 
     // verifica se o jogador está no chão
@@ -94,6 +89,10 @@ public class PlayerController1 : MonoBehaviour
         {
             isGrounded = true;
             animator.SetBool("jump", false);
+        }
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            // Faça algo quando o jogador colidir com uma parede
         }
     }
 
