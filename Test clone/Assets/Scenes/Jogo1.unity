@@ -446,6 +446,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   minHeight: 1
   viewAngle: 30
+  cameraHeight: 2.5
 --- !u!1 &59018177 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 109172321315190402, guid: 50c549939b9529d49b9eae59fc1d0fd3, type: 3}
