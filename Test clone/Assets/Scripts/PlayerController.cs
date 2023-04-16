@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     // variável para verificar se o jogador está no chão
     private bool isGrounded = true;
+    private bool isOnPlatform = false;
+    private MovingPlatform currentPlatform;
 
     private void Start()
     {
@@ -39,6 +41,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
+
         if (Physics.Raycast(transform.position, transform.right, 1f))
         {
             rb.velocity = Vector3.zero;
@@ -51,6 +54,13 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+        } 
+        else if (other.gameObject.CompareTag("MovePlatform"))
+        {
+            isOnPlatform = true;
+            currentPlatform = other.gameObject.GetComponent<MovingPlatform>();
+            currentPlatform.AddPlayer(transform);
+            Debug.Log("Player Entrou na plataforma");
         }
     }
 
@@ -60,6 +70,13 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+        else if (other.gameObject.CompareTag("Platform"))
+        {
+            isOnPlatform = false;
+            currentPlatform.RemovePlayer();
+            currentPlatform = null;
+            Debug.Log("Player saiu da plataforma");
         }
     }
 }
