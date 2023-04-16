@@ -7,11 +7,10 @@ public class PlayerController1 : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
+    public float wallJumpForce = 10f;
     private Rigidbody rb;
 
-    private CharacterController character; // Referência ao componente CharacterController do personagem
     private Animator animator; // Referência ao componente Animator do personagem
-    private Vector3 inputs; // Vetor que armazena as entradas de movimento do jogador
 
     GameObject groundObject;
 
@@ -43,7 +42,7 @@ public class PlayerController1 : MonoBehaviour
     private void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        Vector3 movement = new Vector3(horizontal,0,0) * moveSpeed * Time.deltaTime;
+        Vector3 movement = new Vector3(horizontal, 0, 0) * moveSpeed * Time.deltaTime;
 
         if (movement != Vector3.zero)
         {
@@ -63,28 +62,37 @@ public class PlayerController1 : MonoBehaviour
             animator.SetBool("andando", false);
         }
 
-
-
-        if (Input.GetButtonDown("Jump") && isGrounded) // verifica se o jogador está no chão antes de permitir o pulo
+        if (Input.GetButtonDown("Jump"))
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
-            animator.SetBool("jump", true);
+            if (isGrounded) // verifica se o jogador está no chão antes de permitir o pulo
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                isGrounded = false;
+                animator.SetBool("jump", true);
+            }
+            else if (Physics.Raycast(transform.position + Vector3.up * 1f, transform.forward, out RaycastHit hit, 1f) && hit.collider.CompareTag("Wall")) // verifica se o jogador está colidindo com uma parede
+            {
+                Vector3 jumpDirection = new Vector3(-transform.forward.x, 1f, 0f).normalized; // calcula a direção do salto
+                rb.AddForce(jumpDirection * wallJumpForce, ForceMode.Impulse); // adiciona uma força para fazer o jogador saltar na parede
+                isGrounded = false;
+                animator.SetBool("jump", true);
+            }
         }
 
-        if (Physics.Raycast(transform.position, transform.right, 1f))
-        {
-            rb.velocity = Vector3.zero;
-        }
+        Debug.DrawRay(transform.position + Vector3.up * 1f, transform.forward * 1f, Color.red); // desenha o raio do Raycast em vermelho
     }
-    
+
     // verifica se o jogador está no chão
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            animator.SetBool("jump", false );
+            animator.SetBool("jump", false);
+        }
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            // Faça algo quando o jogador colidir com uma parede
         }
     }
 
