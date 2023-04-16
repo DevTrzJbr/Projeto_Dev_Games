@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MenuprincipalManager : MonoBehaviour
 {
-	[SerializeField] private string nomedoLeveldeJogo;
+	[SerializeField] private string nomeDoLevelDeJogo;
 	[SerializeField] private GameObject painelMenuInicial;
 	[SerializeField] private GameObject painelOpcoes;
 
    public void Jogar()
    {
-		SceneManager.LoadScene("Jogo2");
+		SceneManager.LoadScene(nomeDoLevelDeJogo);
+		painelMenuInicial.SetActive(false);
+		painelOpcoes.SetActive(false);
    }
 
    public void AbrirOpcoes()
@@ -29,7 +31,7 @@ public class MenuprincipalManager : MonoBehaviour
 
    public void SairJogo()
    {
-		Debug.Log("Sair do jogo");
+		Debug.Log("Sair do Jogo");
 		Application.Quit();
    }
 }
