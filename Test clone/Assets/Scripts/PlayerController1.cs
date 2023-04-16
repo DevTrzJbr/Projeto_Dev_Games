@@ -23,10 +23,9 @@ public class PlayerController1 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        character = GetComponent<CharacterController>(); // Obtém a referência ao componente CharacterController do personagem
         animator = GetComponent<Animator>(); // Obtém a referência ao componente Animator do personagem
 
-        groundObject = GameObject.FindGameObjectWithTag("ground");
+        groundObject = GameObject.FindGameObjectWithTag("Ground");
 
         TrapSpikes trapSpikes = FindObjectOfType<TrapSpikes>();
         if (trapSpikes != null)
@@ -44,8 +43,27 @@ public class PlayerController1 : MonoBehaviour
     private void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        Vector3 movement = new Vector3(horizontal, 0f, 0f) * moveSpeed * Time.deltaTime;
-        rb.MovePosition(transform.position + movement);
+        Vector3 movement = new Vector3(horizontal,0,0) * moveSpeed * Time.deltaTime;
+
+        if (movement != Vector3.zero)
+        {
+            animator.SetBool("andando", true);
+
+            Quaternion rotation = Quaternion.LookRotation(movement);
+            if (movement.x > 0)
+            {
+                rotation *= Quaternion.Euler(0f, 0.1f, 0f);
+            }
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 10f * Time.deltaTime);
+            rb.MovePosition(transform.position + movement);
+        }
+        else
+        {
+            animator.SetBool("andando", false);
+        }
+
+
 
         if (Input.GetButtonDown("Jump") && isGrounded) // verifica se o jogador está no chão antes de permitir o pulo
         {
@@ -66,6 +84,7 @@ public class PlayerController1 : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("jump", false );
         }
     }
 
@@ -75,7 +94,6 @@ public class PlayerController1 : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
-            animator.SetBool("jump", false);
         }
     }
 }
