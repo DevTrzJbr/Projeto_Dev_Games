@@ -10,6 +10,8 @@ TagManager:
   - MovePlatform
   - Coin
   - Death
+  - Ouro
+  - EndMap
   layers:
   - Default
   - TransparentFX
