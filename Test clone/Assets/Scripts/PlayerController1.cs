@@ -12,6 +12,8 @@ public class PlayerController1 : MonoBehaviour
 
     private Animator animator; // Referência ao componente Animator do personagem
 
+    private bool playerDead = false; // verifica se o jogador morreu
+
     GameObject groundObject;
 
 
@@ -79,6 +81,13 @@ public class PlayerController1 : MonoBehaviour
             }
         }
         Debug.DrawRay(transform.position + Vector3.up * 1f, transform.forward * 1f, Color.red); // desenha o raio do Raycast em vermelho
+
+        if (transform.position.y < -20f) // se o jogador passar do position y -20
+        {
+            playerDead = true; // define que o jogador morreu
+            Debug.Log("Player morreu"); // exibe mensagem de depuração
+            transform.position = new Vector3(15f, 2f, 2f); // move o jogador para a posição (15, 2, 2)
+        }
     }
 
     // verifica se o jogador está no chão
