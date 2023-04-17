@@ -16,6 +16,7 @@ public class PlayerController1 : MonoBehaviour
 
     private void Start()
     {
+        transform.position = new Vector3(15f, 2f, 2f); // posição inicial do boneco (comente para modo desenvolvimento)
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>(); // Obtém a referência ao componente Animator do personagem
         groundObject = GameObject.FindGameObjectWithTag("Ground");
