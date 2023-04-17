@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     public Vector3 offset; // distância da câmera em relação ao jogador
     public float minHeight = 0.5f; // altura mínima da câmera em relação ao jogador
     public float viewAngle = 30f; // Angulo de visão para o player
-    [Range(0.5f, 2.5f)]
+    [Range(0.5f, 4f)]
     public float cameraHeight = 1.5f; // altura da câmera em relação ao jogador
 
     void Update()
