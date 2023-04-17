@@ -8,19 +8,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MENUGAME1.unity
     guid: b6c2817c2a791f9448030f4da9ce9e0f
+  - enabled: 1
+    path: Assets/Scenes/Jogo_FunfandoessaporradotNetComMenu.unity
+    guid: 03fb02a557377ef43aac28837d452c93
+  - enabled: 1
+    path: Assets/Scenes/EndMissao.unity
+    guid: c485b056ff31b3f4d80f8ccc2a50e599
   - enabled: 0
     path: Assets/Scenes/Jogo2.unity
     guid: 65c42ef3ca1762745a1dc779ac5f1943
   - enabled: 0
     path: Assets/Scenes/MainWithMenu.unity
     guid: cf52012d400ba0d4ea7f2456e1e57e2f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Jogo 3.unity
     guid: ddd8a92f3dbc177409dcf57d429ca1b7
   - enabled: 0
     path: Assets/Scenes/MissaoComp.unity
     guid: 871f5ca41f43ea14484f0abc0aca9276
-  - enabled: 1
-    path: Assets/Scenes/EndMissao.unity
-    guid: c485b056ff31b3f4d80f8ccc2a50e599
+  - enabled: 0
+    path: Assets/Scenes/JogoMenuFimLess.unity
+    guid: 031e451c34d1f274787fcbef7a610269
   m_configObjects: {}

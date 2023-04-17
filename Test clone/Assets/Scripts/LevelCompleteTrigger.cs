@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelCompleteTrigger : MonoBehaviour
 
+public class LevelCompleteTrigger : MonoBehaviour
 {
-   [SerializeField] private string NomeCena;
-   private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.name == "Sphere Final de Fase" && collision.collider.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene(NomeCena);
+            Debug.Log("Mudando cena");
+            SceneManager.LoadScene("EndMissao");
         }
     }
 }
- 
