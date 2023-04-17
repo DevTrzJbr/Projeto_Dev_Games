@@ -27,5 +27,11 @@ public class colectCoin : MonoBehaviour
             score++;
             Destroy(col.gameObject);
         }
+
+        if (col.CompareTag("Ouro") == true)
+        {
+            score = score + 10;
+            Destroy(col.gameObject);
+        }
     }
 }
