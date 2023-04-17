@@ -78,7 +78,6 @@ public class PlayerController1 : MonoBehaviour
                 animator.SetBool("jump", true);
             }
         }
-
         Debug.DrawRay(transform.position + Vector3.up * 1f, transform.forward * 1f, Color.red); // desenha o raio do Raycast em vermelho
     }
 
