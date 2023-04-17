@@ -9,6 +9,7 @@ TagManager:
   - Trap
   - MovePlatform
   - Coin
+  - Death
   layers:
   - Default
   - TransparentFX

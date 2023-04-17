@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PlayerController1 : MonoBehaviour
@@ -8,37 +7,23 @@ public class PlayerController1 : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float wallJumpForce = 10f;
+
     private Rigidbody rb;
-
     private Animator animator; // Referência ao componente Animator do personagem
-
     private bool playerDead = false; // verifica se o jogador morreu
-
-    GameObject groundObject;
-
-
-    // variável para verificar se o jogador está no chão
-    private bool isGrounded = true;
+    private bool isGrounded = true; // variável para verificar se o jogador está no chão
+    private GameObject groundObject;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-
         animator = GetComponent<Animator>(); // Obtém a referência ao componente Animator do personagem
-
         groundObject = GameObject.FindGameObjectWithTag("Ground");
-
         TrapSpikes trapSpikes = FindObjectOfType<TrapSpikes>();
         if (trapSpikes != null)
         {
             trapSpikes.OnPlayerEnterTrap += OnEnterTrap;
         }
-    }
-
-    private void OnEnterTrap(PlayerController player)
-    {
-        Debug.Log("O jogador entrou na armadilha!");
-        // Faça algo quando o jogador entrar na armadilha
     }
 
     private void Update()
@@ -49,13 +34,11 @@ public class PlayerController1 : MonoBehaviour
         if (movement != Vector3.zero)
         {
             animator.SetBool("andando", true);
-
             Quaternion rotation = Quaternion.LookRotation(movement);
             if (movement.x > 0)
             {
                 rotation *= Quaternion.Euler(0f, 0.1f, 0f);
             }
-
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 10f * Time.deltaTime);
             rb.MovePosition(transform.position + movement);
         }
@@ -102,6 +85,10 @@ public class PlayerController1 : MonoBehaviour
         {
             // Faça algo quando o jogador colidir com uma parede
         }
+        if (other.gameObject.CompareTag("Death") || other.gameObject.CompareTag("Trap"))
+        {
+            transform.position = new Vector3(15f, 2f, 2f); // move o jogador para a posição (15, 2, 2)
+        }
     }
 
     // verifica se o jogador saiu do chão
@@ -111,5 +98,11 @@ public class PlayerController1 : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    private void OnEnterTrap(PlayerController player)
+    {
+        Debug.Log("O jogador entrou na armadilha!");
+        // Faça algo quando o jogador entrar na armadilha
     }
 }
